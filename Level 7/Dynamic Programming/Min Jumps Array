@@ -1,0 +1,27 @@
+public class Solution {
+    public int jump(ArrayList<Integer> A) {
+        int[] nums = new int[A.size()];
+        for(int i=0;i<nums.length;i++)
+        nums[i] = A.get(i);
+        if(!canJump(nums)) return -1;
+        if(nums==null || nums.length==0) return 0;
+        int curfar=0, curend=0,jumps=0;
+        for(int i=0;i<nums.length-1;i++){
+            curfar = Math.max(curfar, i+nums[i]);
+            if(i==curend){
+                curend = curfar;
+                jumps++;
+            }
+        }
+        return jumps;
+    }
+    public boolean canJump(int[] nums) {
+        int n = nums.length-1;
+        int max = n;
+        for(int i=n;i>=0;i--){
+            if(i+nums[i]>=max)
+                max = i;
+        }
+        return (max==0); 
+    }
+}
