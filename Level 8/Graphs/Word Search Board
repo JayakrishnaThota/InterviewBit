@@ -1,0 +1,42 @@
+public class Solution {
+	public int exist(final ArrayList<String> board, final String word) {
+        if (board == null || word == null) {
+            return 0;
+        }
+
+        int rows = board.size();
+        int columns = board.get(0).length();
+
+        if (rows == 0 || columns == 0) {
+            return 0;
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j=  0; j < columns; j++) {
+                if (dfs(board, word, i, j, 0)) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private boolean dfs(ArrayList<String> board, String word, int rowIndex, int columnIndex, int wordIndex) {
+        int rows = board.size();
+        int columns = board.get(0).length();
+
+        if (rowIndex < 0 || rowIndex >= rows || columnIndex < 0 || columnIndex >= columns) {
+            return false;
+        } else if (board.get(rowIndex).charAt(columnIndex) != word.charAt(wordIndex)) {
+            return false;
+        } else if (wordIndex == word.length() - 1){
+            return true;
+        } else {
+            return  dfs(board, word, rowIndex - 1, columnIndex, wordIndex + 1) ||
+                    dfs(board, word, rowIndex + 1, columnIndex, wordIndex + 1) ||
+                    dfs(board, word, rowIndex, columnIndex - 1, wordIndex + 1) ||
+                    dfs(board, word, rowIndex, columnIndex + 1, wordIndex + 1);
+        }
+    }
+}
