@@ -1,0 +1,29 @@
+public class Solution {
+	public void setZeroes(ArrayList<ArrayList<Integer>> a) {
+	    Set<Integer> scannedRows = new HashSet<>();
+	    Set<Integer> scannedCols = new HashSet<>();
+	    
+	    for(int row = 0; row < a.size(); row++) {
+	        for(int col = 0; col < a.get(row).size(); col++) {
+	            int val = a.get(row).get(col);
+	            if(val == 0) {
+	                if(!scannedRows.contains(row)) {
+	                    scannedRows.add(row);
+	                }
+	                
+	                if(!scannedCols.contains(col)) {
+	                    scannedCols.add(col);
+	                }
+	            }
+	        }
+	    }
+	    
+	    for(int row = 0; row < a.size(); row++) {
+	        for(int col = 0; col < a.get(row).size(); col++) {
+	            if(scannedRows.contains(row) || scannedCols.contains(col)) {
+	                a.get(row).set(col, 0);
+	            }
+	        }
+	    }
+	}
+}
