@@ -1,0 +1,34 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> findSubstring(String s, final List<String> A) {
+        String[] words = new String[A.size()];
+        for(int i=0;i<words.length;i++)
+        words[i] = A.get(i);
+        ArrayList<Integer> result = new ArrayList();
+        //1
+        Map<String, Integer> map = new HashMap<>();
+        for(String word:words)
+        {
+            if(map.containsKey(word)) map.put(word,map.get(word)+1);
+            else map.put(word,1);
+        }
+        //2
+        int m =words[0].length();
+        int n=words.length;
+        //3
+        for(int i=0;i<=s.length()-n*m;i++)
+        {
+            Map<String, Integer> copy = new HashMap(map);
+            int j=i,k=n;
+            while(k>0)
+            {
+                String str = s.substring(j, j+m);
+               if (!copy.containsKey(str) || copy.get(str) < 1) break;
+        		copy.put(str, copy.get(str)-1);
+                k--;j+=m;
+            }
+            if (k == 0) result.add(i);
+        }
+return result;
+    }
+}
