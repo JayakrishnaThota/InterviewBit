@@ -1,0 +1,26 @@
+public class Solution {
+	public int searchInsert(ArrayList<Integer> a, int b) {
+	    if (a.size() == 0) {
+	        return 0;
+	    }
+	    boolean less_than = false;
+	    int left = 0, right = a.size() - 1, mid = (left + right) / 2;
+	    while (left <= right) {
+	        mid = (left + right) / 2;
+	        int item = a.get(mid);
+	        if (item == b) {
+	            return mid;
+	        } else if (item > b) {
+	            right = mid - 1;
+	            less_than = false;
+	        } else {
+	            less_than = true;
+	            left = mid + 1;
+	        }
+	    }
+	    if (less_than) {
+	        mid += 1;
+	    }
+	    return mid;
+	}
+}
