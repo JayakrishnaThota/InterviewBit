@@ -1,0 +1,26 @@
+//O(n) time and space
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head==null || head.next==null) return head;
+        Map<Integer, Integer> map = new HashMap();
+        ListNode iter = head;
+        while(iter!=null){
+            map.put(iter.val, map.getOrDefault(iter.val,0)+1);
+            iter = iter.next;
+        }
+        iter = head;
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while(iter!=null){
+            if(map.get(iter.val)>1){
+                iter = iter.next;
+            }
+            else{
+                cur.next = new ListNode(iter.val);
+                cur = cur.next;
+                iter = iter.next;
+            }
+        }
+        return dummy.next;
+    }
+}
