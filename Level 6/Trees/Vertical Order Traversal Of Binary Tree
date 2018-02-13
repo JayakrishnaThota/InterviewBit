@@ -1,0 +1,33 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> verticalOrderTraversal(TreeNode A) {
+        ArrayList<ArrayList<Integer>> list = new ArrayList();
+        if(A==null) return list;
+        Queue<TreeNode> q = new LinkedList();
+        Queue<Integer> columns = new LinkedList();
+        Map<Integer, ArrayList<Integer>> map = new HashMap();
+        q.offer(A);
+        columns.offer(0);
+        int min=0, max = 0;
+        while(!q.isEmpty()){
+            TreeNode temp = q.poll();
+            int line = columns.poll();
+            if(map.get(line)==null)
+            map.put(line, new ArrayList());
+            map.get(line).add(temp.val);
+            if(temp.left!=null){
+                q.offer(temp.left);
+                columns.offer(line-1);
+                min = Math.min(min, line-1);
+            }
+            if(temp.right!=null){
+                q.offer(temp.right);
+                columns.offer(line+1);
+                max = Math.max(max, line+1);
+            }
+        }
+        for(int i=min;i<=max;i++){
+            list.add(map.get(i));
+        }
+        return list;
+    }
+}
