@@ -1,0 +1,19 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
+        int[] nums = new int[A.size()];
+        for(int i=0;i<nums.length;i++)
+        nums[i] = A.get(i);
+        Arrays.sort(nums);
+        ArrayList<ArrayList<Integer>> list = new ArrayList();
+        helper(list, new ArrayList<>(), nums, 0);
+        return list;
+    }
+    public void helper(ArrayList<ArrayList<Integer>> list, ArrayList<Integer> sublist, int[] nums, int start){
+        list.add(new ArrayList<>(sublist));
+        for(int i=start;i<nums.length;i++){
+            sublist.add(nums[i]);
+            helper(list, sublist, nums, i+1);
+            sublist.remove(sublist.size()-1);
+        }
+    }
+}
