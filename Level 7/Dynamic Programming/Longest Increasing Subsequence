@@ -1,0 +1,21 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int lis(final List<Integer> A) {
+        //Sanity check
+        if(A==null || A.size()==0) return 0;
+        int m = A.size();
+        int[] dp = new int[m];
+        for(int i=0;i<m;i++){
+            dp[i] = 1;
+            for(int j=0;j<i;j++){
+                if(A.get(i)>A.get(j))
+                dp[i] = Math.max(dp[i],1+dp[j]);
+            }
+        }
+        int max = 0;
+        for(int i=0;i<m;i++){
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+}
