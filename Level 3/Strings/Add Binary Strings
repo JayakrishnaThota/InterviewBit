@@ -1,0 +1,15 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+     int i =a.length()-1,j=b.length()-1;
+        int sum = 0, carry = 0;
+        StringBuffer sb = new StringBuffer();
+        while(i>=0 || j>=0 || carry!=0){
+            int x = (i>=0)?a.charAt(i--)-'0':0;
+            int y = (j>=0)?b.charAt(j--)-'0':0;
+            sum = (x+y+carry)%2;
+            carry = (x+y+carry)/2;
+            sb.append(sum+"");
+        }
+        return sb.reverse().toString();
+    }
+}
