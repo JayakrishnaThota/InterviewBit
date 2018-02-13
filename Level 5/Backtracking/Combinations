@@ -1,0 +1,18 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
+   ArrayList<ArrayList<Integer>> list = new ArrayList();
+        helper(list, new ArrayList<>(), n, k, 1);
+        return list;
+    }
+    public void helper(ArrayList<ArrayList<Integer>> list, ArrayList<Integer> sublist, int n, int k, int start){
+        if(sublist.size()==k){
+            list.add(new ArrayList(sublist));
+            return;
+        }
+        for(int i=start;i<=n;i++){
+            sublist.add(i);
+            helper(list, sublist, n, k,i+1);
+            sublist.remove(sublist.size()-1);
+        }
+    }
+}
