@@ -1,0 +1,31 @@
+public class Solution {
+	public ArrayList<ArrayList<String>> partition(String s) {
+	    ArrayList<ArrayList<String>> list = new ArrayList();
+        ArrayList<String> sublist = new ArrayList();
+        backtrack(list, sublist, s, 0);
+        return list;
+    }
+    public void backtrack(ArrayList<ArrayList<String>> list, ArrayList<String> sublist, String s, int start){
+        if(start==s.length()){
+            list.add(new ArrayList(sublist));
+            return;
+        }
+        for(int i = start; i<s.length();i++){
+            if(isPalindrome(s, start, i)){
+                if(start==i)
+                    sublist.add(s.charAt(start)+"");
+                else
+                    sublist.add(s.substring(start, i+1));
+                backtrack(list, sublist, s, i+1);
+                sublist.remove(sublist.size()-1);
+            }
+        }
+    }
+    public boolean isPalindrome(String s, int low, int high){
+        while(low<=high){
+            if(s.charAt(low++)!=s.charAt(high--))
+                return false;
+        }
+        return true;
+    }
+}
