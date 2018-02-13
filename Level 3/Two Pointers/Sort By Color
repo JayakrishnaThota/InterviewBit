@@ -1,0 +1,20 @@
+public class Solution {
+	public void sortColors(ArrayList<Integer> a) {
+	    int x=0,b=0,c=0;
+        for(int num:a){
+            if(num==0) x++;
+            else if(num==1) b++;
+            else c++;
+        }
+        int index = 0;
+        while(index<x){
+            a.set(index++,0);
+        }
+        while(index<x+b){
+            a.set(index++,1);
+        }
+        while(index<x+b+c){
+            a.set(index++,2);
+        }
+	}
+}
