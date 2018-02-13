@@ -1,0 +1,20 @@
+public class Solution {
+	public int wordBreak(String a, ArrayList<String> b) {
+	   int n = a.length();
+	   boolean[] dp = new boolean[n];
+	   Arrays.fill(dp, false);
+	   for (int idx = 0; idx < n; idx++) {
+	       // lws is last word start
+	       for (int lws = idx; lws >= 0; lws--) {
+	           if ( (lws == 0 || dp[lws - 1]) && b.contains(a.substring(lws, idx + 1))) {
+	               dp[idx] = true;
+	               break;
+	           }
+	       }
+	   }
+	   
+	   
+	   return dp[n-1] ? 1 : 0;
+	}
+	
+}
