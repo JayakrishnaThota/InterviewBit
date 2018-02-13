@@ -1,0 +1,14 @@
+public class Solution {
+	public int searchMatrix(ArrayList<ArrayList<Integer>> a, int b) {
+	    if(a==null || a.size()==0) return 0;
+	    int m = a.size();
+	    int n = a.get(0).size();
+	    int rs = 0, cs = n-1;
+	    while(rs<m && cs>=0){
+	        if(a.get(rs).get(cs)==b) return 1;
+	        else if(a.get(rs).get(cs)>b) cs--;
+	        else rs++;
+	    }
+	    return 0;
+    }
+}
