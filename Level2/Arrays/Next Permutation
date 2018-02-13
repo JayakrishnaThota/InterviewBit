@@ -1,0 +1,30 @@
+public class Solution {
+	public void nextPermutation(ArrayList<Integer> A) {
+	    int start = A.size() - 1;
+        // find from the back the ascending order
+        while (start > 0 && A.get(start - 1) >= A.get(start)){
+            start--;
+        }
+        // now A[start - 1] < A[start] and 
+        // A[start : end] are in ascending order
+        if (start > 0) {
+            int end = A.size() - 1;
+            // find the just-larger-than number to swap with A[start - 1]
+            while (A.get(end) <= A.get(start - 1)) {
+                end--;
+            }
+            swap(A, start - 1, end);
+        }
+        // reverse A[start : end]
+        for (int i = start; i < (start + A.size()) / 2; i++) {
+            swap(A, i, A.size() - 1 + start - i);
+        }
+    }
+    
+    private void swap(ArrayList<Integer> array, int i, int j) {
+        int temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
+    }
+}
+
