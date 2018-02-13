@@ -1,0 +1,40 @@
+public class Solution {
+	public int isValidSudoku(final List<String> a) {
+	    Map<Integer, Set<Character>> col = new HashMap<>(); // map to check if cols are valid
+	    Map<Integer, Set<Character>> row = new HashMap<>(); // map to check if rows are valid
+	    for (int i = 0; i < 3; i++) {
+	        for (int j = 0; j < 3; j++) { // we have 9 3x3 squares
+	            Set<Character> set = new HashSet<>(); // set to check if 3x3 square is valid
+	            for (int m = 0; m < 3; m++) {
+	                for (int n = 0; n < 3; n++) { // for every 3x3 square
+	                    int c = 3 * j + n;
+	                    int r = 3 * i + m;
+	                    
+	                    char x = a.get(r).charAt(c);
+	                    
+	                    if (x == '.') {
+	                        continue;
+	                    }
+	                    
+	                    if (!col.containsKey(c)) {
+	                        col.put(c, new HashSet<>());
+	                    }
+	                    if (!row.containsKey(r)) {
+	                        row.put(r, new HashSet<>());
+	                    }
+	                    
+	                    if (set.contains(x) || col.get(c).contains(x) || row.get(r).contains(x))  {
+	                        return 0;
+	                    } else {
+	                        set.add(x);
+	                        col.get(c).add(x);
+	                        row.get(r).add(x);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    return 1;
+	}
+}
