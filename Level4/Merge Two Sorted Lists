@@ -1,0 +1,30 @@
+//O(m+n) time and O(1) space  
+public class Solution {
+    public ListNode mergeTwoLists(ListNode A, ListNode B) {
+        ListNode dummy = new ListNode(0);
+        ListNode ret = dummy;
+        while(A!=null && B!=null){
+            if(A.val<B.val){
+                dummy.next = A;
+                A = A.next;
+                dummy = dummy.next;
+            }
+            else{
+                dummy.next = B;
+                B = B.next;
+                dummy = dummy.next;
+            }
+        }
+        while(A!=null){
+            dummy.next = A;
+            A = A.next;
+            dummy = dummy.next;
+        }
+        while(B!=null){
+            dummy.next = B;
+                B = B.next;
+                dummy = dummy.next;
+        }
+        return ret.next;
+    }
+}
