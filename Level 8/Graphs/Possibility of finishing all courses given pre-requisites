@@ -1,0 +1,59 @@
+public class Solution {
+    
+    class Node{
+        int pt;
+        LinkedList<Integer> aList;
+        
+        Node(int i){
+            pt = i;
+            aList = new LinkedList<>();
+        }
+    }
+    class Graph{
+        Node[] points;
+        
+        Graph(int n){
+            points = new Node[n];
+            for(int i=0;i<n;i++){
+                points[i] = new Node(i);
+            }
+        }
+    }
+    
+    boolean flag;
+    
+    public int solve(int n, ArrayList<Integer> a, ArrayList<Integer> b) {
+        Graph graph = new Graph(n);
+        flag=false;
+        for(int i=0;i<a.size();i++){
+            graph.points[a.get(i)-1].aList.add(b.get(i)-1);
+        }
+        int val[] = new int[n];
+        for(int i=0;i<n;i++){
+            if(val[i]==0){
+                traverseGraph(val, graph.points[i], graph);
+            }
+        }
+        if(flag)
+            return 0;
+        else
+            return 1;
+    }
+    
+    private void traverseGraph(int[] val,Node node, Graph graph){
+        if(flag)
+            return;
+        val[node.pt] = 2;
+        int idx;
+        for(ListIterator<Integer> iterator = node.aList.listIterator();
+                    iterator.hasNext();){
+            idx = iterator.next();
+            if(val[idx]==2)
+                flag = true;
+            else{
+                traverseGraph(val,graph.points[idx],graph);
+            }
+        }
+        val[node.pt]=1;
+    }
+}
