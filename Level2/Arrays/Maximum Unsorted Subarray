@@ -1,0 +1,48 @@
+public class Solution {
+    public ArrayList<Integer> subUnsort(ArrayList<Integer> A) {
+        
+        int start=0,end=0,max=0,i,min=A.get(0);
+        boolean once=true;
+        ArrayList<Integer> arr=new ArrayList<Integer>();
+        for(i=0;i<A.size()-1;i++){
+            if(A.get(i)<max)
+            end=i;
+            if(A.get(i)<=A.get(i+1))
+            continue;
+            else{
+                if(once){
+                start=i;
+                once=false;
+                min=A.get(i+1);
+                }
+                if(A.get(i)>max)
+                max=A.get(i);
+                if(!once){
+                if(A.get(i+1)<min)
+                min=A.get(i+1);
+                }
+            }
+        }
+         if(A.get(i)<max)
+            end=i;
+            for(i=0;i<=start;i++)
+            {
+                if(A.get(i)<=min)
+                continue;
+                else{
+                    start=i;
+                    break;
+                }
+            }
+            if(start>=0&&end>0)
+            {
+                arr.add(start);
+                arr.add(end);
+                return arr;
+            }else
+        {
+            arr.add(-1);
+            return arr;
+        }
+    }
+}
