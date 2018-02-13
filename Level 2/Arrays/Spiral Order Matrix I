@@ -1,0 +1,50 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> spiralOrder(final List<ArrayList<Integer>> A) {
+        int[][] matrix = new int[A.size()][A.get(0).size()];
+        for(int i=0;i<A.size();i++){
+            for(int j=0;j<A.get(0).size();j++){
+                matrix[i][j] = A.get(i).get(j);
+            }
+        }
+        ArrayList<Integer> result = new ArrayList();
+        if(matrix==null||matrix.length==0||matrix[0].length==0) return result;
+        int rowbegin = 0;
+        int colbegin = 0;
+        int rowend = matrix.length-1;
+        int columnend = matrix[0].length-1;
+        while(rowbegin<=rowend && colbegin<=columnend)
+        {
+        //Traverse left
+        for(int i=colbegin;i<=columnend;i++)
+        {
+            result.add(matrix[rowbegin][i]);
+        }
+        rowbegin++;
+        //Traverse down
+       for (int j = rowbegin; j <= rowend; j++) {
+                result.add(matrix[j][columnend]);
+            }
+            columnend--;
+            if(rowbegin<=rowend)
+            {
+        //Traverse right
+        for(int i=columnend;i>=colbegin;i--)
+        {
+            result.add(matrix[rowend][i]);
+        }
+        rowend--;
+            }
+            if(colbegin<=columnend)
+            {
+        //Traverseup
+        for(int j=rowend;j>=rowbegin;j--)
+        {
+            result.add(matrix[j][colbegin]);
+        }
+        colbegin++;
+            }
+        }
+        return result;
+    }
+}
