@@ -1,0 +1,60 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        if(n==0) return new ArrayList();
+        int rowbegin = 0;
+        int colbegin = 0;
+        int rowend = n-1;
+        int columnend = n-1;
+        int k=1;
+        while(rowbegin<=rowend && colbegin<=columnend)
+        {
+        //Traverse left
+        for(int i=colbegin;i<=columnend;i++)
+        {
+            matrix[rowbegin][i] = k;
+            k++;
+        }
+        rowbegin++;
+        //Traverse down
+       for (int j = rowbegin; j <= rowend; j++) 
+            {
+                matrix[j][columnend] = k;
+                k++;
+            }
+            columnend--;
+            if(rowbegin<=rowend)
+            {
+        //Traverse right
+        for(int i=columnend;i>=colbegin;i--)
+        {
+            matrix[rowend][i] = k;
+            k++;
+        }
+        rowend--;
+            }
+            if(colbegin<=columnend)
+            {
+        //Traverseup
+        for(int j=rowend;j>=rowbegin;j--)
+        {
+            matrix[j][colbegin] = k;
+            k++;
+        }
+        colbegin++;
+            }
+        }
+        return list(matrix);
+    }
+    public ArrayList<ArrayList<Integer>> list(int[][] matrix){
+        ArrayList<ArrayList<Integer>> result = new ArrayList();
+        for(int i=0;i<matrix.length;i++){
+            ArrayList<Integer> sublist = new ArrayList();
+            for(int j=0;j<matrix[0].length;j++){
+                sublist.add(matrix[i][j]);
+            }
+            result.add(sublist);
+        }
+        return result;
+    }
+}
