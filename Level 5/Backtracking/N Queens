@@ -1,0 +1,33 @@
+public class Solution {
+	public ArrayList<ArrayList<String>> solveNQueens(int n) {
+ArrayList<ArrayList<String>> result = new ArrayList();
+        if(n<1) return result;
+        helper(0,n,new boolean[n], new boolean[2*n], new boolean[2*n], new ArrayList<String>(), result);
+        return result;
+    }
+    public void helper(int r, int n, boolean[] col, boolean[] d1, boolean[] d2, ArrayList<String> list, ArrayList<ArrayList<String>> result){
+        if(r==n) 
+        {
+            result.add(new ArrayList<String>(list));
+            return;   
+        }
+        for(int c=0;c<n;c++){
+            int id1 = c-r+n-1;
+            int id2 = r+c;
+            if(!col[c]&&!d1[id1]&&!d2[id2]){
+                col[c] = true;
+                d1[id1] = true;
+                d2[id2] = true;
+                char[] ch = new char[n];
+                Arrays.fill(ch,'.');
+                ch[c]='Q';
+                list.add(new String(ch));
+                helper(r+1,n,col,d1,d2,list,result);
+                col[c] = false;
+                d1[id1] = false;
+                d2[id2] = false;
+                list.remove(list.size()-1);
+            }
+        }
+    }
+}
