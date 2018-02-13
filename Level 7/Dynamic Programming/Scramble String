@@ -1,0 +1,33 @@
+public class Solution {
+	public int isScramble(final String strA, final String strB) {
+	    if (strA == null || strB == null) {
+	        return 0;
+	    } else if (strA.length() != strB.length()) {
+	        return 0;
+	    } else if (strA.equals(strB)) {
+	        return 1;
+	    }
+	    
+	    int length = strA.length();
+	    
+	    boolean[][][] scrambled = new boolean[length][length][1 + length];
+	    
+	    for (int k = 1; k <= length; k++) {
+	        for (int i = 0; i + k <= length; i++) {
+	            for (int j = 0; j + k <= length; j++) {
+	                if (k == 1) {
+	                    scrambled[i][j][k] = strA.charAt(i) == strB.charAt(j);
+	                } else {
+	                    for (int q = 1; q < k && !scrambled[i][j][k]; q++) {
+	                        scrambled[i][j][k] = 
+	                            (scrambled[i][j][q] && scrambled[i + q][j + q][k - q]) ||
+	                            (scrambled[i][j + k - q][q] && scrambled[i + q][j][k - q]);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    return scrambled[0][0][length] ? 1 : 0;
+	}
+}
