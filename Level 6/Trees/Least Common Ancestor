@@ -1,0 +1,51 @@
+public class Solution {
+	public int lca(TreeNode a, int val1, int val2) {
+	    if (a == null) {
+	        return -1;
+	    }	    
+	    boolean v1 = checkIfValueExist(a, val1);
+	    boolean v2 = checkIfValueExist(a, val2);
+	    
+	    if (v1 & v2) {
+	        return getLCA(a, val1, val2);
+	    }
+	    return -1;
+	}
+	
+	public int getLCA(TreeNode a, int val1, int val2) {
+	    if (a == null) {
+	        return -1;
+	    }
+	    if (a.val == val1) {
+	        return val1;
+	    }
+	    if (a.val == val2) {
+	        return val2;
+	    }
+	    
+	    int left = getLCA(a.left, val1, val2);
+	    int right = getLCA(a.right, val1, val2);
+	    if (left != -1 && right != -1) {
+	        return a.val;
+	    }
+	    if (left != -1) {
+	        return left;
+	    }
+	    if (right != -1) {
+	        return right;
+	    }
+	    return -1;
+	}
+	
+	private boolean checkIfValueExist(TreeNode a, int val) {
+	    if (a != null && a.val == val) {
+	        return true;
+	    }
+	    if (a == null) {
+	        return false;
+	    }
+	    boolean left = checkIfValueExist(a.left, val);
+	    boolean right = checkIfValueExist(a.right, val);
+	    return left | right;
+	}
+}
