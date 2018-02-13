@@ -1,0 +1,27 @@
+public class Solution {
+    public int cntBits(ArrayList<Integer> A) {
+        if(A==null ||A.size()==0){
+            return 0;
+        }
+        long res=0;
+        long mod=1000000007;
+        int count =0;
+        while(count<32){
+            count++;
+            long onez=0,zeroz=0;
+            for(int i=0;i<A.size();i++){
+                int local=A.get(i);
+                if((local & 1) ==1){
+                    onez++;
+                }else{
+                    zeroz++;
+                }
+                local=local>>1;
+                A.set(i,local);
+            }
+            res = (res+ ((onez*zeroz)%mod +(onez*zeroz)%mod)%mod)%mod;
+        }
+        
+        return (int)(res%mod);
+    }
+}
