@@ -1,0 +1,38 @@
+public class Solution {
+    public int romanToInt(String s) {
+    int[] digits = new int[s.length()];
+        for(int i=0;i<s.length();i++){
+            switch(s.charAt(i)){
+                case 'I':
+                digits[i] = 1;
+                break;
+                case 'V':
+                digits[i] = 5;
+                break;
+                case 'X':
+                digits[i] = 10;
+                break;
+                case 'L':
+                digits[i] = 50;
+                break;
+                case 'C':
+                digits[i] = 100;
+                break;
+                case 'D':
+                digits[i] = 500;
+                break;
+                case 'M':
+                digits[i] = 1000;
+                break;
+            }
+        }
+        int result = 0;
+        for(int i=0;i<digits.length-1;i++){
+            if(digits[i]<digits[i+1])
+                result-=digits[i];
+            else
+                result+=digits[i];
+        }
+        return result+digits[s.length()-1];
+    }
+}
