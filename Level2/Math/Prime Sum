@@ -1,0 +1,28 @@
+public class Solution {
+    public ArrayList<Integer> primesum(int A) {
+        ArrayList<Integer> list = new ArrayList();
+        boolean[] dp = getPrimes(A);
+        for(int i=2;i<A;i++){
+            if(dp[i]&&dp[A-i]){
+                list.add(i);
+                list.add(A-i);
+                return list;
+            }
+        }
+        return list;
+    }
+    public boolean[] getPrimes(int n){
+        //This array indicates whether it is a prime or not
+        boolean[] dp = new boolean[n];
+        if(n<2) return dp;
+        Arrays.fill(dp,true);
+        dp[0] = false;
+        dp[1] = false;
+        for(int i=2;i<n;i++){
+            for(int j=2;j*i<n;j++){
+                dp[i*j] = false;
+            }
+        }
+        return dp;
+    }
+}
