@@ -1,0 +1,22 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int majorityElement(final List<Integer> A) {
+        int[] nums = new int[A.size()];
+        for(int i=0;i<nums.length;i++)
+        nums[i] = A.get(i);
+        if(nums==null || nums.length==0) return 0;
+        int maj = nums[0],count=1;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]==maj)
+                count++;
+            else{
+                count--;
+                if(count==0){
+                    maj = nums[i];
+                    count = 1;
+                }
+            }
+        }
+        return maj;
+    }
+}
