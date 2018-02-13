@@ -1,0 +1,28 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int maximumGap(final List<Integer> A) {
+        //Edge case
+        if(A==null || A.size()<1) return -1;
+        int n = A.size();
+        int[] lmin = new int[n];
+        int[] rmax = new int[n];
+        lmin[0] = A.get(0);
+        for(int i=1;i<n;i++){
+            lmin[i] = Math.min(A.get(i), lmin[i-1]);
+        }
+        rmax[n-1] = A.get(n-1);
+        for(int j=n-2;j>=0;j--){
+            rmax[j] = Math.max(A.get(j), rmax[j+1]);
+        }
+        int i=0, j=0, max=0;
+        while(i<n && j<n){
+            if(lmin[i]<=rmax[j]){
+                max = Math.max(j-i, max);
+                j++;
+            }
+            else
+            i++;
+        }
+        return max;
+    }
+}
