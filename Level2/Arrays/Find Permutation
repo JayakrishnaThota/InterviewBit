@@ -1,0 +1,19 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> findPerm(final String s, int B) {
+        ArrayList<Integer> list = new ArrayList();
+        int min = 1, max = B;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='I'){
+                list.add(min);
+                min++;
+            }
+            else{
+                list.add(max);
+                max--;
+            }
+        }
+        list.add(min);
+        return list;
+    }
+}
