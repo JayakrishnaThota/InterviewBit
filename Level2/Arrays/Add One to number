@@ -1,0 +1,53 @@
+public class Solution {
+    public ArrayList<Integer> plusOne(ArrayList<Integer> A) {
+        int[] nums = new int[A.size()];
+        for(int i=0;i<nums.length;i++)
+        nums[i] = A.get(i);
+        int[] result = plusOne(nums);
+        ArrayList<Integer> list = new ArrayList();
+        boolean start = false;
+        for(int i=0;i<result.length;i++){
+        if(!start && result[i]==0) continue;
+        start = true;
+        list.add(result[i]);
+        }
+        return list;
+    }
+    public int[] plusOne(int[] digits) {
+        int[] result = new int[digits.length+1];
+        for(int i=digits.length-1;i>=0;i--){
+            if(digits[i]==9) {
+                digits[i]=0;
+            }
+            else{
+            digits[i]++;
+            return digits;
+            }
+        }
+        result[0] = 1;
+        return result;
+    }
+}
+
+/*
+Given a non-negative number represented as an array of digits,
+
+add 1 to the number ( increment the number represented by the digits ).
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example:
+
+If the vector has [1, 2, 3]
+
+the returned vector should be [1, 2, 4]
+
+as 123 + 1 = 124.
+
+ NOTE: Certain things are intentionally left unclear in this question which you should practice asking the interviewer.
+For example, for this problem, following are some good questions to ask :
+Q : Can the input have 0’s before the most significant digit. Or in other words, is 0 1 2 3 a valid input?
+A : For the purpose of this question, YES
+Q : Can the output have 0’s before the most significant digit? Or in other words, is 0 1 2 4 a valid output?
+A : For the purpose of this question, NO. Even if the input has zeroes before the most significant digit.
+*/
