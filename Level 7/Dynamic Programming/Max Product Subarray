@@ -1,0 +1,18 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int maxProduct(final List<Integer> A) {
+        int[] nums = new int[A.size()];
+        for(int i=0;i<nums.length;i++)
+        nums[i] = A.get(i);
+        if(nums.length==0||nums==null) return 0;
+        int maxendinghere=nums[0], maxsofar = nums[0], minsofar = nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            int temp=maxsofar;
+            maxsofar =Math.max(Math.max(maxsofar*nums[i],minsofar*nums[i]),nums[i]);
+            minsofar =Math.min(Math.min(temp*nums[i],minsofar*nums[i]),nums[i]);
+            maxendinghere = Math.max(maxsofar,maxendinghere);
+        }
+        return maxendinghere;
+    }
+}
