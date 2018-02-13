@@ -1,0 +1,41 @@
+public class Solution {
+	public void solve(ArrayList<ArrayList<Character>> a) {
+	    //Sanity check
+	    if(a==null || a.size()==0) return;
+	    int m = a.size();
+	    int n = a.get(0).size();
+	    //Change all 'O' on the border
+	    for(int i=0;i<m;i++){
+	        if(a.get(i).get(0)=='O'){
+	            dfs(a, i, 0, m, n);
+	        }
+	        if(a.get(i).get(n-1)=='O'){
+	            dfs(a, i, n-1, m, n);
+	        }
+	    }
+	    for(int j=0;j<n;j++){
+	        if(a.get(0).get(j)=='O'){
+	            dfs(a, 0, j, m, n);
+	        }
+	        if(a.get(m-1).get(j)=='O'){
+	            dfs(a, m-1, j, m, n);
+	        }
+	    }
+	    for(int i=0;i<m;i++){
+	        for(int j=0;j<n;j++){
+	            if(a.get(i).get(j)=='O')
+	            a.get(i).set(j,'X');
+	            if(a.get(i).get(j)=='*')
+	            a.get(i).set(j,'O');
+	        }
+	    }
+	}
+	public void dfs(ArrayList<ArrayList<Character>> a, int i, int j, int m, int n){
+	    if(i<0 || j<0 || i>=m || j>=n || a.get(i).get(j)!='O') return;
+	    a.get(i).set(j,'*');
+	    dfs(a, i+1, j, m, n);
+	    dfs(a, i-1, j, m, n);
+	    dfs(a, i, j-1, m, n);
+	    dfs(a, i, j+1, m, n);
+	}
+}
