@@ -1,0 +1,51 @@
+public class Solution {
+    
+    public int find(int ind){
+        while(parent[ind] != ind){
+            ind = parent[ind];
+        }
+        return ind;
+    }
+    
+    public void union(int ind1, int ind2){
+        int par2 = find(ind2);
+        while(find(ind1) != par2){
+            int oldPar = parent[ind1];
+            parent[ind1] = par2;
+            ind1 = oldPar;
+        }
+    }
+    
+    int[] parent = null;
+    public int solve(int A, ArrayList<ArrayList<Integer>> B) {
+        parent = new int[A+1];
+        for(int i=0; i<=A;i++){
+            parent[i]=i;
+        }
+        
+        PriorityQueue<int[]> q = new PriorityQueue<int[]>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b){
+                return Integer.compare(a[2], b[2]);
+            }
+        });
+        
+        for(ArrayList<Integer> edge: B){
+            q.add(new int[]{edge.get(0), edge.get(1), edge.get(2)});
+        }
+       // while(!q.isEmpty()){
+        //    int[] edge = q.poll();
+         //   System.out.println(edge[0]+" "+edge[1]+" "+edge[2]);
+        //}
+        
+        int res = 0;
+        while(!q.isEmpty()){
+            int[] curr = q.poll();
+            if(find(curr[0]) != find(curr[1])){
+                union(curr[0], curr[1]);
+                res += curr[2];
+            }
+        }
+        return res;
+    }
+}
