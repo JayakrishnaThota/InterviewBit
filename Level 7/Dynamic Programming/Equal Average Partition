@@ -1,0 +1,85 @@
+public class Solution
+{
+    private Map<Integer, Boolean> memo = new HashMap<>();
+    
+    public ArrayList<ArrayList<Integer>> avgset(ArrayList<Integer> array)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+
+        Set<Integer> aIndex = new HashSet<>();
+
+        int N = array.size();
+        
+        int totalSum = 0;
+        for (int i = 0; i < N; i++)
+            totalSum += array.get(i);
+
+        Collections.sort(array);
+            
+        for (int aSize = 1; aSize < N; aSize++)
+        {
+            float aSum = (float)totalSum * aSize / N;
+            if (aSum != (int)aSum)
+                continue;
+            
+            for (int i = 0; i < N; i++)
+            {
+                if (find(i, aSize, aSum, array, aIndex))
+                {
+                    buildResult(result, array, aIndex, aIndex.size(), N - aIndex.size());
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
+    
+    private boolean find(int index, int aSize, float aSum, ArrayList<Integer> array, Set<Integer> a)
+    {
+        if (index >= array.size() || aSize == 0)
+            return false;
+    
+        int value = array.get(index);
+        if (aSize == 1 && value == aSum)
+        {
+            a.add(index);
+            return true;
+        }
+
+        if (find(index + 1, aSize - 1, aSum - value, array, a))
+        {
+            a.add(index);
+            return true;
+        }
+        else if (find(index + 1, aSize, aSum, array, a))
+            return true;
+
+        return false;
+    }
+
+    private void buildResult(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> array,
+        Set<Integer> aIndex, int aSize, int bSize)
+    {
+        ArrayList<Integer> a = new ArrayList<>();
+        ArrayList<Integer> b = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++)
+        {
+            if (aIndex.contains(i))
+            {
+                if (aSize <= bSize)
+                    a.add(array.get(i));
+                else
+                    b.add(array.get(i));
+            }
+            else
+            {
+                if (aSize <= bSize)
+                    b.add(array.get(i));
+                else
+                    a.add(array.get(i));
+            }
+        }
+        result.add(a);
+        result.add(b);
+    }
+}
