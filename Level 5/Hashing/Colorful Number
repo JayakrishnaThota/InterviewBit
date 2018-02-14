@@ -1,0 +1,32 @@
+public class Solution {
+    public int colorful(int A) {
+        if (A == 1) {
+            return 1;
+        }
+        
+        Map<Integer, Integer> occ = new HashMap<>();
+        List<Integer> digits = new ArrayList<>();
+        
+        // check for duplicate digits
+        while (A > 0) {
+            int digit = A % 10;
+            A = A/10;
+            
+            if (digit == 1 || digit == 0 || occ.get(digit) != null) {
+                return 0;
+            }
+            occ.put(digit, 1);
+            digits.add(digit);
+        }
+        
+        // check for product of consecutive digits
+        // It is sufficient to check digits(i) * digits(i+1)
+        for (int i = 0; i < digits.size() - 1; i++) {
+            if (occ.get(digits.get(i) * digits.get(i+1)) != null) {
+                return 0;
+            }
+        }
+        
+        return 1;
+    }
+}
