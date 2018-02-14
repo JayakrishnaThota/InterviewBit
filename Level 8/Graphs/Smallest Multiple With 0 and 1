@@ -1,0 +1,24 @@
+//BFS 
+public class Solution {
+    public String multiple(int A) {
+        Queue<String> q = new LinkedList();
+        q.offer("1");
+        while(!q.isEmpty()){
+            String s = q.poll();
+            if(isMultiple(s,A))
+            return s;
+            q.offer(s+"0");
+            q.offer(s+"1");
+        }
+        return "";
+    }
+    public boolean isMultiple(String t, int N){
+        int r = 0;
+    for (int i = 0; i < t.length(); i++)
+    {
+        r = r * 10 + (t.charAt(i) - '0');
+        r %= N;
+    }
+    return (r==0);
+    }
+}
