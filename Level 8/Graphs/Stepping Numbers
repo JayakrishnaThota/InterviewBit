@@ -1,0 +1,31 @@
+//BFS based solution
+public class Solution {
+    public ArrayList<Integer> stepnum(int m, int n) {
+        ArrayList<Integer> list = new ArrayList();
+        for(int i=0;i<=9;i++)
+        bfs(m,n,i,list);
+        Collections.sort(list);
+        return list;
+    }
+    public void bfs(int m, int n, int i, ArrayList<Integer> list){
+        Queue<Integer> queue = new LinkedList<Integer>();
+        queue.offer(i);
+        while(!queue.isEmpty()){
+            int num = queue.poll();
+            if(num>=m && num<=n){
+                list.add(num);
+            }
+            if(num==0 || num>n)
+            continue;
+            int lastdigit = num%10;
+            int a = num*10 + (lastdigit+1);
+            int b = num*10 + (lastdigit-1);
+            if(lastdigit==9) queue.offer(b);
+            else if(lastdigit==0) queue.offer(a);
+            else{
+                queue.offer(a);
+                queue.offer(b);
+            }
+        }
+    }
+}
