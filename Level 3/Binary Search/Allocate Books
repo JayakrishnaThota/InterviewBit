@@ -1,0 +1,61 @@
+public class Solution {
+    public int books(ArrayList<Integer> A, int B) {
+        int n = A.size();
+        //When the number of books are less than the number of students 
+        if(B>n) return -1;
+        if(B<=0 || A==null || A.size()==0) return -1;
+        int min = 0, max = 0;
+        long sum=0;
+        for(Integer a:A){
+            sum+=a;
+        }
+        max = (int)sum;
+        int result = Integer.MAX_VALUE;
+        while(min<=max){
+            int mid = min + (max-min)/2;
+            if(helper(A,B,mid)){
+                max = mid - 1;
+                result = Math.min(result, mid);
+            }
+            else
+                min = mid+1;
+        }
+        return result;
+    }
+    public boolean helper(ArrayList<Integer> A, int students, int mid){
+        int books = A.size();
+        int studentsRequired = 1;
+        int curr_sum = 0;
+      
+        // iterate over all books
+        for (int i = 0; i < books; i++)
+        {
+            // check if current number of pages are greater
+            // than curr_min that means we will get the result
+            // after mid no. of pages
+            if (A.get(i) > mid)
+                return false;
+      
+            // count how many students are required
+            // to distribute curr_min pages
+            if (curr_sum + A.get(i) > mid)
+            {
+                // increment student count
+                studentsRequired++;
+      
+                // update curr_sum
+                curr_sum = A.get(i);
+      
+                // if students required becomes greater
+                // than given no. of students,return false
+                if (studentsRequired > students)
+                    return false;
+            }
+      
+            // else update curr_sum
+            else
+                curr_sum += A.get(i);
+        }
+        return true;
+    }
+}
