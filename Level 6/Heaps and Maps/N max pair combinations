@@ -1,0 +1,19 @@
+public class Solution {
+    public ArrayList<Integer> solve(ArrayList<Integer> A, ArrayList<Integer> B) {
+        int n = A.size();
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        for(Integer a:A){
+            for(Integer b:B){
+                int sum = a+b;
+                pq.offer(sum);
+                if(pq.size()>n)
+                pq.poll();
+            }
+        }
+        ArrayList<Integer> list = new ArrayList();
+        while(!pq.isEmpty()){
+            list.add(0,pq.poll());
+        }
+        return list;
+    }
+}
