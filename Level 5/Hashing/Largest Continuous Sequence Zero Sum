@@ -1,0 +1,23 @@
+public class Solution {
+    public ArrayList<Integer> lszero(ArrayList<Integer> A) {
+        Map<Integer, Integer> presum = new HashMap();
+        int sum = 0, max = 0;
+        presum.put(0,-1);
+        ArrayList<Integer> list = new ArrayList();
+        for(int i=0;i<A.size();i++){
+            sum+=A.get(i);
+            if(presum.containsKey(sum)){
+                if(max<i-presum.get(sum)){
+                    max = i-presum.get(sum);
+                    list.clear();
+                    for(int j=presum.get(sum)+1;j<=i;j++){
+                        list.add(A.get(j));
+                    }
+                }
+            }
+            else
+            presum.put(sum, i);
+        }
+        return list;
+    }
+}
