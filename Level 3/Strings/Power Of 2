@@ -1,0 +1,10 @@
+import java.math.BigInteger;
+public class Solution {
+    public int power(String A) {
+        if(A.equals("1")) return 0;
+        BigInteger B = new BigInteger(A);
+        int lastsetbit = B.getLowestSetBit();
+        B = B.clearBit(lastsetbit);
+        return B.equals(BigInteger.ZERO)?1:0;
+    }
+}
