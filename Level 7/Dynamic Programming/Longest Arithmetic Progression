@@ -1,0 +1,28 @@
+public class Solution {
+    
+    public int solve(final List<Integer> A) {
+        if(A.size() <= 2)
+        return A.size();
+        
+        //dp.get(i).get(j) denotes longest AP ending at i with common difference j
+        
+        List<Map<Integer, Integer>> dp = new ArrayList<>();
+        Map<Integer, Integer> m;
+        int ans = 1, diff;
+        for(int i = 0; i < A.size(); i++) {
+            dp.add(new HashMap<>());
+            m = dp.get(i);
+            for(int j = 0; j < i; j++) {
+                diff = A.get(i) - A.get(j);
+                if(dp.get(j).get(diff) == null)
+                m.put(diff, 2);
+                else
+                m.put(diff, dp.get(j).get(diff) + 1);
+                if(m.get(diff) > ans)
+                ans = m.get(diff);
+            }
+        }
+        
+        return ans;
+    }
+}
