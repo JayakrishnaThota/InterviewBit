@@ -1,0 +1,36 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int solve(final List<Integer> M, final List<Integer> F, final List<Integer> C) {
+        int maxManFill = Integer.MIN_VALUE;
+        for(int i = 0; i<M.size(); i++){
+            maxManFill = Math.max(maxManFill, M.get(i));
+        }
+        
+        int[] dp = new int[maxManFill+1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        
+        for(int i = 0; i<F.size(); i++){
+            if(F.get(i) <= maxManFill){
+                dp[F.get(i)] = Math.min(dp[F.get(i)], C.get(i));
+            }
+        }
+        
+        dp[0] = 0;
+        
+        for(int i = 1; i<dp.length; i++){
+            for(int j = 0; j<=i/2; j++){
+                if(dp[i-j] != Integer.MAX_VALUE){
+                    int cost = dp[j] + dp[i-j];
+                    dp[i] = Math.min(dp[i], cost);
+                }
+            }
+        }
+        
+        int res = 0;
+        for(int i = 0; i<M.size(); i++){
+            res += dp[M.get(i)];
+        }
+        
+        return res;
+    }
+}
