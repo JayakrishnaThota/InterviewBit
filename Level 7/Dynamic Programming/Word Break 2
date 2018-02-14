@@ -1,0 +1,26 @@
+public class Solution {
+    public ArrayList<String> wordBreak(String s, ArrayList<String> wordDict) {
+       return word_Break(s, wordDict, 0);
+    }
+    HashMap<Integer, ArrayList<String>> map = new HashMap<>();
+
+    public ArrayList<String> word_Break(String s, ArrayList<String> wordDict, int start) {
+        if (map.containsKey(start)) {
+            return map.get(start);
+        }
+        ArrayList<String> res = new ArrayList<>();
+        if (start == s.length()) {
+            res.add("");
+        }
+        for (int end = start + 1; end <= s.length(); end++) {
+            if (wordDict.contains(s.substring(start, end))) {
+                ArrayList<String> list = word_Break(s, wordDict, end);
+                for (String l : list) {
+                    res.add(s.substring(start, end) + (l.equals("") ? "" : " ") + l);
+                }
+            }
+        }
+        map.put(start, res);
+        return res;
+    }
+}
