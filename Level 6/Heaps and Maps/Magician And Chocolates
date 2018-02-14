@@ -1,0 +1,18 @@
+public class Solution {
+    public int nchoc(int A, ArrayList<Integer> B) {
+        //Declaration of a max pq
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a,b)->(b-a));
+        for(Integer b:B){
+            pq.offer(b);
+        }
+        long sum = 0;
+        while(A-->0){
+            if(pq.isEmpty()) break;
+            int max = pq.poll();
+            sum+=max;
+            sum%=1000000007;
+            pq.offer((int)Math.floor(max/2));
+        }
+        return (int)sum;
+    }
+}
