@@ -1,60 +1,38 @@
 public class Solution {
-    private int count = 0;
-    private boolean marked[][];
-    private int di[] = new int[] {1, -1, 0, 0};
-    private int dj[] = new int[] {0, 0, 1, -1};
-    private ArrayList<String> A;
-    
     public int black(ArrayList<String> A) {
-        int m, n;
-        
-        if (A == null)
-            return 0;
-        
-        m = A.size();
-        n = A.get(0).length();
-        
-        marked = new boolean[m][n];
-        count = 0;
-        this.A = A;
-        
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!marked[i][j] && A.get(i).charAt(j) == 'X') {
-                    dfs(i, j, m, n);
+        if(A==null || A.size()==0) return 0;
+        int m = A.size();
+        int n = A.get(0).length();
+        char[][] board = new char[m][n];
+        for(int i=0;i<m;i++){
+            String s = A.get(i);
+            for(int j=0;j<n;j++){
+                char c =s.charAt(j);
+                board[i][j] = c;
+            }
+        }
+        return helper(board);
+    }
+    public int helper(char[][] board){
+        int m = board.length;
+        int n = board[0].length;
+        int count = 0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j]=='X'){
+                    dfs(board,i,j,m,n);
                     count++;
                 }
             }
         }
-        
         return count;
     }
-    
-    public void dfs(int i, int j, int m, int n) {
-        
-        marked[i][j] = true;
-        
-        for (int k = 0; k < 4; k++) {
-            
-            int ii = i + di[k];
-            int jj = j + dj[k];
-            
-            if (isValid(ii, jj, m, n) && !marked[ii][jj]) {
-                dfs(ii, jj, m, n);   
-            }
-            
-        }
-    }
-    
-    public boolean isValid(int i, int j, int m, int n) {
-        
-        if (i < 0 || i >= m || j < 0 || j >= n)
-            return false;
-        
-        if (A.get(i).charAt(j) != 'X')
-            return false;
-        
-        return true;
+    public void dfs(char[][] board, int i, int j, int m, int n){
+        if(i<0 || j<0 || i==m || j==n || board[i][j]=='O') return;
+        board[i][j] = 'O';
+        dfs(board,i+1,j,m,n);
+        dfs(board,i-1,j,m,n);
+        dfs(board,i,j+1,m,n);
+        dfs(board,i,j-1,m,n);
     }
 }
-    
