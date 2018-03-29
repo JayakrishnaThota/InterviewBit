@@ -13,12 +13,12 @@ public class Solution {
     public Solution(TreeNode root) {
         stack = new Stack();
         TreeNode cur = root;
-        while(cur!=null){
+        if(cur!=null){
             stack.push(cur);
-            if(cur.left!=null)
+            while(cur!=null){
+                if(cur.left!=null) stack.push(cur.left);
                 cur = cur.left;
-            else 
-                break;
+            }
         }
     }
 
@@ -30,15 +30,12 @@ public class Solution {
     /** @return the next smallest number */
     public int next() {
         TreeNode ret = stack.pop();
-        TreeNode cur = ret;
-        if(cur.right!=null){
-            cur = cur.right;
-            while(cur!=null){
+        TreeNode cur = ret.right;
+        if(cur!=null){
             stack.push(cur);
-            if(cur.left!=null)
+            while(cur!=null){
+                if(cur.left!=null) stack.push(cur.left);
                 cur = cur.left;
-            else 
-                break;
             }
         }
         return ret.val;
