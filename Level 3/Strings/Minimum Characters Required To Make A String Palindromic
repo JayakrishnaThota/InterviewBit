@@ -2,8 +2,8 @@ public class Solution {
     public int solve(String s) {
     String ns = s+'#'+new StringBuilder(s).reverse().toString();
         int[] table = KMP(ns);
-        String result = new StringBuilder(s.substring(table[ns.length()-1])).reverse().toString()+s;
-        return result.length()-s.length();
+        String result = s.substring(table[ns.length()-1]);
+        return result.length();
     }
     public int[] KMP(String s){
         int[] table = new int[s.length()];
