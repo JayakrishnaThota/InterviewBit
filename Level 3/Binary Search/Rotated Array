@@ -1,0 +1,13 @@
+//O(logn) and O(1)
+public class Solution {
+	// DO NOT MODIFY THE LIST
+	public int findMin(final List<Integer> a) {
+	    int low = 0,high = a.size()-1;
+        while(low<high){
+            int mid = low+(high-low)/2;
+            if(a.get(mid)>a.get(high))
+                low = mid+1;
+            else high = mid;
+        }
+        return a.get(low);
+	}
