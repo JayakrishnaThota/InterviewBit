@@ -1,27 +1,21 @@
 public class Solution {
     public int cntBits(ArrayList<Integer> A) {
-        if(A==null ||A.size()==0){
-            return 0;
-        }
-        long res=0;
-        long mod=1000000007;
-        int count =0;
-        while(count<32){
-            count++;
-            long onez=0,zeroz=0;
-            for(int i=0;i<A.size();i++){
-                int local=A.get(i);
-                if((local & 1) ==1){
-                    onez++;
-                }else{
-                    zeroz++;
-                }
-                local=local>>1;
-                A.set(i,local);
+        int n = A.size();
+        int[] nums = new int[n];
+        for(int i=0;i<n;i++) nums[i] = A.get(i);
+        return totalHammingDistance(nums);
+    }
+    public int totalHammingDistance(int[] nums) {
+        if(nums==null || nums.length==0) return 0;
+        int n = nums.length;
+        int result = 0;
+        for(int i=0;i<32;i++){
+            int bitcount = 0;
+            for(int num:nums){
+                if(((num>>i)&1)==1) bitcount++;
             }
-            res = (res+ ((onez*zeroz)%mod +(onez*zeroz)%mod)%mod)%mod;
+            result = result + (bitcount)*(n-bitcount);
         }
-        
-        return (int)(res%mod);
+        return 2*result;
     }
 }
