@@ -1,11 +1,12 @@
+//O(n) and O(1)
 public class Solution {
 	public int removeDuplicates(ArrayList<Integer> nums) {
-	    if(nums==null || nums.size()<3) return nums.size();
-        int index = 0;
-        for(int n:nums){
-            if(index<2 || n>nums.get(index-2))
-                nums.set(index++,n);
-        }
-        return index;
+	    int index = 0;
+	    for(int n:nums){
+	        if(index<2 || n!=nums.get(index-2)){
+	            nums.set(index++,n);
+	        }
+	    }
+	    return index;
 	}
 }
