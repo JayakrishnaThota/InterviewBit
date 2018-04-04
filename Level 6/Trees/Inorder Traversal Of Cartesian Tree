@@ -1,42 +1,22 @@
-/**
- * Definition for binary tree
- * class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) {
- *      val = x;
- *      left=null;
- *      right=null;
- *     }
- * }
- */
+//O(n2) time and O(n) space
 public class Solution {
     public TreeNode buildTree(ArrayList<Integer> a) {
-        if(a == null || a.size() == 0)
-            return null;
-        TreeNode root = buildTree(a, 0, a.size() -1 );
-        return root;
+        if(a==null) return null;
+        return helper(a,0,a.size()-1);
     }
-    public TreeNode buildTree(ArrayList<Integer> a, int start, int end){
-        if(start > end)
-            return null;
-        
-        int max = Integer.MIN_VALUE;
-        int maxIndex = 0;
-        for(int i = start; i <= end; i++){
-            if(max < a.get(i)){
+    public TreeNode helper(ArrayList<Integer> a, int low, int high){
+        if(low>high) return null;
+        if(low==high) return new TreeNode(a.get(low));
+        int max = Integer.MIN_VALUE, maxindex = 0;
+        for(int i=low;i<=high;i++){
+            if(max<a.get(i)){
                 max = a.get(i);
-                maxIndex = i;
+                maxindex = i;
             }
         }
-        
         TreeNode root = new TreeNode(max);
-        
-        if(start == end)
-            return root;
-        root.left = buildTree(a, start, maxIndex - 1);
-        root.right = buildTree(a, maxIndex + 1, end);
+        root.left = helper(a,low,maxindex-1);
+        root.right = helper(a,maxindex+1,high);
         return root;
     }
 }
