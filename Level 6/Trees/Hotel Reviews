@@ -1,175 +1,33 @@
+//O(n) time and O(max(m,n)) space
+//where m is the number of words in A
+//where n is the number of reviews i.e. number of sentences in B
 public class Solution {
-    TrieNode root;
     public ArrayList<Integer> solve(String A, ArrayList<String> B) {
-        root = new TrieNode();
+        ArrayList<Integer> result = new ArrayList();
+        Map<Integer, LinkedHashSet<Integer>> map = new HashMap();
+        if(B==null || B.size()==0) return result;
+        Set<String> set = new HashSet();
         String[] words = A.split("_");
-        buildTrie(words);
-        ArrayList<Integer> list = new ArrayList();
-        Map<Integer, String> map = new TreeMap();
-        Map<String, Integer> loc = new HashMap();
-        int i=0;
+        for(String word:words) set.add(word);
+        int index = 0,max=0;
         for(String b:B){
-            int count = 0;
             String[] tokens = b.split("_");
-            for(String token:tokens){
-                count+=search(token);
-            }
-            map.put(count,b);
-            loc.put(b, i++);
-        }
-        for(int key:map.keySet()){
-            String s = map.get(key);
-            int location = loc.get(s);
-            list.add(location);
-            map.remove(key);
-        }
-        return list;
-    }
-    public void buildTrie(String[] words){
-        for(String word:words){
-            TrieNode temp = root;
-            char[] ch = word.toCharArray();
-            for(int i=0;i<ch.length;i++){
-                char c = ch[i];
-                if(temp.children[c-'a']==null){
-                    temp.children[c-'a'] = new TrieNode();
-                }
-                temp = temp.children[c-'a'];
-            }
-            temp.isWord = true;
-            temp.count = temp.count + 1;
-        }
-    }
-    public int search(String word) {
-       TrieNode temp = root;
-     for(int i=0;i<word.length();i++){
-         char c = word.charAt(i);
-         if(temp.children[c-'a']==null)
-             return 0;
-         temp = temp.children[c-'a'];
-     }
-       return temp.count;
-    }
-    class TrieNode{
-        TrieNode[] children = new TrieNode[26];
-        boolean isWord;
-        int count;
-    }
-}
-
-
-/*
-public class Solution {
-    static final int ALPHABET_SIZE = 26;
-     
-    // trie node
-    static class TrieNode
-    {
-        TrieNode[] children = new TrieNode[ALPHABET_SIZE];
-      
-        // isEndOfWord is true if the node represents
-        // end of a word
-        boolean isEndOfWord;
-         
-        TrieNode(){
-            isEndOfWord = false;
-            for (int i = 0; i < ALPHABET_SIZE; i++)
-                children[i] = null;
-        }
-    };
-      
-    static TrieNode root; 
-    static void insert(String key)
-    {
-        int level;
-        int length = key.length();
-        int index;
-      
-        TrieNode pCrawl = root;
-      
-        for (level = 0; level < length; level++)
-        {
-            index = key.charAt(level) - 'a';
-            if (pCrawl.children[index] == null)
-                pCrawl.children[index] = new TrieNode();
-      
-            pCrawl = pCrawl.children[index];
-        }
-      
-        // mark last node as leaf
-        pCrawl.isEndOfWord = true;
-    }
-    static boolean search(String key)
-    {
-        int level;
-        int length = key.length();
-        int index;
-        TrieNode pCrawl = root;
-      
-        for (level = 0; level < length; level++)
-        {
-            index = key.charAt(level) - 'a';
-      
-            if (pCrawl.children[index] == null)
-                return false;
-      
-            pCrawl = pCrawl.children[index];
-        }
-      
-        return (pCrawl != null && pCrawl.isEndOfWord);
-    }
-    public ArrayList<Integer> solve(String A, ArrayList<String> B) {
-        root =  new TrieNode();
-        TreeMap<Integer,ArrayList<Integer>> tm = new TreeMap<Integer,ArrayList<Integer>>();
-        int i= 0,n=A.length();
-        while(i<n){
-            StringBuilder temp = new StringBuilder();
-            while(i<n&&A.charAt(i)!='_'){
-                temp.append(A.charAt(i));
-                i++;
-            }
-            insert(temp.toString());
-            i++;
-        }
-        i=0;n=B.size();
-        ArrayList<Integer> useMe = new ArrayList<Integer>();
-        while(i<n){
-            String b = B.get(i);
             int count = 0;
-            int j = 0,k=0,m=b.length();
-            while(k<m){
-                j=k;
-                while(k<m&&b.charAt(k)!='_'){
-                    k++;
-                }
-                if(search(b.substring(j,k))){
-                    count++;
-                }
-                k++;
+            for(String t:tokens){
+                if(set.contains(t)) count++;
             }
-            if(tm.containsKey(count)){
-                useMe = tm.get(count);
-                useMe.add(i);
-                tm.put(count,useMe);
-            }
-            else{
-                ArrayList<Integer> val = new ArrayList<Integer>();
-                val.add(i);
-                tm.put(count,val);
-            }
-            i++;
+            max = Math.max(count,max);
+            if(map.get(count)==null) map.put(count, new LinkedHashSet<Integer>());
+            map.get(count).add(index);
+            index++;
         }
-        ArrayList<Integer> fresult = new ArrayList<Integer>();
-        while(!tm.isEmpty()){
-            int high = tm.lastKey();
-            ArrayList<Integer> pointer = tm.get(high);
-            for(int ad : pointer){
-                fresult.add(ad);
+        for(int i=max;i>=0;i--){
+            if(map.get(i)!=null){
+                for(Integer val:map.get(i)){
+                    result.add(val);
+                }
             }
-            tm.remove(high);
         }
-        return fresult;
+        return result;
     }
 }
-
-*/
