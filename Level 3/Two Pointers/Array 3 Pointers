@@ -1,34 +1,24 @@
+//O(m+n+k) and O(1)
 public class Solution {
 	// DO NOT MODIFY THE LISTS
 	public int minimize(final List<Integer> a, final List<Integer> b, final List<Integer> c) {
-	    int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE, minDiff = Integer.MAX_VALUE;
-	    int i = 0, j = 0, k = 0, l1 = a.size(), l2 = b.size(), l3 = c.size();
-	    while(i < l1 && j < l2 && k < l3){
-	        int v1 = a.get(i), v2 = b.get(j), v3 = c.get(k);
-	        if(v1 <= v2 && v1 <= v3){
-	            min = v1;
-	            i++;
-	        }
-	        else if(v2 <= v1 && v2 <= v3){
-	            min = v2;
-	            j++;
-	        }
-	        else{
-	            min = v3;
-	            k++;
-	        }
-	        if(v1 >= v2 && v1 >= v3){
-	            max = v1;
-	        }
-	        else if(v2 >= v1 && v2 >= v3){
-	            max = v2;
-	        }
-	        else{
-	            max = v3;
-	        }
-            if(minDiff > max - min)
-                minDiff = max- min;
+	    int i = 0, j = 0,  k = 0;
+	    int result = Integer.MAX_VALUE;
+	    while(i<a.size()&&j<b.size()&&k<c.size()){
+	        int x = a.get(i), y = b.get(j), z = c.get(k);
+	        int min = getMin(x,y,z);
+	        int max = getMax(x,y,z);
+	        result = Math.min(result, max-min);
+	        if(min==x) i++;
+	        else if(min==y) j++;
+	        else if(min==z) k++;
 	    }
-	    return minDiff;
+	    return result;
+	}
+	public int getMin(int a, int b, int c){
+	    return Math.min(a,Math.min(b,c));
+	}
+	public int getMax(int a, int b, int c){
+	   return Math.max(a,Math.max(b,c));
 	}
 }
